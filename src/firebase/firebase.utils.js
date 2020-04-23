@@ -21,7 +21,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     const userRef = firestore.doc(`users/${userAuth.uid}`);
     const snapShot = await userRef.get();
 
-    console.log(snapShot);
 
     //adding data to the DB
     if(!snapShot.exists){
