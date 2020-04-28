@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
+
 
 import { cartItemsSelector, cartTotalSelector } from '../../redux/cart/cart.selectors'
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
@@ -36,8 +38,10 @@ const CheckoutPage = ({ cartItems, total }) => (
             total ?
             <div className='total'>TOTAL: ${total}</div> 
             :
-            null
-
+            <div className='empty-cart'>
+                <h1>Your Cart Is Empty!</h1>
+                <Link to='/shop'>BACK TO SHOP</Link>
+            </div>
         }
     </div>
 )
