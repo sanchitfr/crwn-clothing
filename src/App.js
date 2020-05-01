@@ -27,7 +27,7 @@ class App extends React.Component {
 
       if(userAuth){
         const userRef = await createUserProfileDocument(userAuth);
-        //onSnaopshot method returns us the snapshot corresponding to the documentReference object
+        //onSnapshot method returns us the snapshot corresponding to the documentReference object
         userRef.onSnapshot(snapShot => {
          setCurrentUser ({
               id: snapShot.id,
@@ -38,6 +38,8 @@ class App extends React.Component {
       else{
         setCurrentUser(userAuth);
       }
+
+
     });
   };
 
@@ -65,11 +67,11 @@ class App extends React.Component {
 };
 
 const mapStateToProps = createStructuredSelector({
-  currentUser : currentUserSelector
+  currentUser : currentUserSelector,
 })
 
 const mapDispatchToProps = dispatch => ({
-    setCurrentUser : user => dispatch(setCurrentUser(user))
+    setCurrentUser : user => dispatch(setCurrentUser(user)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
