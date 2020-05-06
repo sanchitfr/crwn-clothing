@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 
@@ -14,22 +14,14 @@ import { createStructuredSelector } from 'reselect'
 import { currentUserSelector } from './redux/user/user.selectors'
 import { checkUserSession } from './redux/user/user.actions';
 
-class App extends React.Component {
+const App = ({ checkUserSession, currentUser }) => {
 
-  unsubscribeFromAuth = null; //this is used to close the authStateChange thread after the applilcation is unmounted from the DOM
-
-  componentDidMount(){
-    const { checkUserSession } = this.props;
+  useEffect(() => {
     checkUserSession();
-  }
+  }, [checkUserSession])
 
 
-  componentWillUnmount(){
-    this.unsubscribeFromAuth();
-  }
 
-
-  render (){
     return(
       <div>
         <Header/>
@@ -37,14 +29,13 @@ class App extends React.Component {
           <Route exact={true} path='/' component={HomePage}/>
           <Route path='/shop' component={ShopPage}/>
           <Route exact path='/checkout' component={CheckoutPage}/>
-          <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/'/>) : (<SignInandSignUp/>)}/>
+          <Route exact path='/signin' render={() => currentUser ? (<Redirect to='/'/>) : (<SignInandSignUp/>)}/>
         </Switch>
         {/* <HomePage/> */}
 
       </div>
     );
   }
-};
 
 const mapStateToProps = createStructuredSelector({
   currentUser : currentUserSelector,
